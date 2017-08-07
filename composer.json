@@ -3,10 +3,6 @@
     "description": "A middleware dispatcher supporting psr15.",
     "type": "library",
     "license": "MIT",
-    "repositories": [
-        {"type": "composer", "url": "https://repo.packagist.com/pm-connect/"},
-        {"packagist.org": false}
-    ],
     "authors": [
         {
             "name": "Joseph Ralph",
