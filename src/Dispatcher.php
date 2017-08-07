@@ -37,6 +37,8 @@ class Dispatcher implements DelegateInterface
         foreach ($middleware as $item) {
             $this->middleware->push($item);
         }
+
+        return $this;
     }
 
     /**
