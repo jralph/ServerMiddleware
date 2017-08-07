@@ -1,5 +1,9 @@
 # Server Middleware Dispatcher
 
+[![Build Status](https://travis-ci.org/jralph/ServerMiddleware.svg)](https://travis-ci.org/jralph/ServerMiddleware)
+[![Coverage Status](https://coveralls.io/repos/github/jralph/ServerMiddleware/badge.svg?branch=master)](https://coveralls.io/github/jralph/ServerMiddleware?branch=master)
+[![License](https://poser.pugx.org/jralph/ServerMiddleware/license.svg)](https://packagist.org/packages/jralph/ServerMiddleware)
+
 A PSR-15 compliant server middleware dispatcher implementation.
 
 ## Goal
