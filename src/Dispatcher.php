@@ -31,6 +31,7 @@ class Dispatcher implements DelegateInterface
 
     /**
      * @param MiddlewareInterface|MiddlewareInterface[] ...$middleware
+     * @return $this
      */
     public function addMiddleware(MiddlewareInterface ...$middleware)
     {
