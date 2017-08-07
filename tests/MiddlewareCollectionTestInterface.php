@@ -3,19 +3,19 @@
 namespace Tests;
 
 use JRalph\ServerMiddleware\MiddlewareCollection;
-use JRalph\ServerMiddleware\Psr\Delegate;
-use JRalph\ServerMiddleware\Psr\Middleware;
+use JRalph\ServerMiddleware\Psr\DelegateInterface;
+use JRalph\ServerMiddleware\Psr\MiddlewareInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 class MiddlewareCollectionTest extends TestCase
 {
-    private function getDummyMiddleware(): Middleware
+    private function getDummyMiddleware(): MiddlewareInterface
     {
         $response = $this->prophesize(ResponseInterface::class);
 
-        return new class($response->reveal()) implements Middleware {
+        return new class($response->reveal()) implements MiddlewareInterface {
             private $response;
 
             public function __construct(ResponseInterface $response)
@@ -25,7 +25,7 @@ class MiddlewareCollectionTest extends TestCase
 
             public function process(
                 ServerRequestInterface $request,
-                Delegate $delegate
+                DelegateInterface $delegate
             ) {
                 return $this->response;
             }
@@ -39,9 +39,9 @@ class MiddlewareCollectionTest extends TestCase
         $collection->push($this->getDummyMiddleware());
 
         $this->assertEquals(1, count($collection->toArray()));
-        $this->assertContainsOnlyInstancesOf(Middleware::class, $collection->toArray());
+        $this->assertContainsOnlyInstancesOf(MiddlewareInterface::class, $collection->toArray());
 
-        $this->assertInstanceOf(Middleware::class, $collection->current());
+        $this->assertInstanceOf(MiddlewareInterface::class, $collection->current());
 
         $this->assertEquals(1, count($collection->toArray()));
 

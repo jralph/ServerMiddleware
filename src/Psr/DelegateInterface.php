@@ -5,7 +5,7 @@ namespace  JRalph\ServerMiddleware\Psr;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-interface Delegate /* extends Psr\Http\ServerMiddleware\DelegateInterface */
+interface DelegateInterface /* extends Psr\Http\ServerMiddleware\DelegateInterface */
 {
     /**
      * Dispatch the next available middleware and return the response.

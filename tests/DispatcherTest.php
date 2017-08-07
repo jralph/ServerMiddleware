@@ -3,8 +3,8 @@
 namespace Tests;
 
 use JRalph\ServerMiddleware\Dispatcher;
-use JRalph\ServerMiddleware\Psr\Delegate;
-use JRalph\ServerMiddleware\Psr\Middleware;
+use JRalph\ServerMiddleware\Psr\DelegateInterface;
+use JRalph\ServerMiddleware\Psr\MiddlewareInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -16,17 +16,17 @@ class DispatcherTest extends TestCase
     {
         $dispatcher = new Dispatcher();
 
-        $dispatcher->addMiddleware(new class implements Middleware {
+        $dispatcher->addMiddleware(new class implements MiddlewareInterface {
             public function process(
                 ServerRequestInterface $request,
-                Delegate $delegate
+                DelegateInterface $delegate
             ) {
                 return $delegate->process($request);
             }
         });
 
         $this->assertEquals(1, count($dispatcher->getMiddleware()));
-        $this->assertContainsOnlyInstancesOf(Middleware::class, $dispatcher->getMiddleware());
+        $this->assertContainsOnlyInstancesOf(MiddlewareInterface::class, $dispatcher->getMiddleware());
     }
 
     function testItCanProcessMiddleware()
@@ -35,7 +35,7 @@ class DispatcherTest extends TestCase
 
         $output = (object) ['results' => []];
 
-        $dispatcher->addMiddleware(new class($output) implements Middleware {
+        $dispatcher->addMiddleware(new class($output) implements MiddlewareInterface {
             private $output;
 
             public function __construct($output)
@@ -45,7 +45,7 @@ class DispatcherTest extends TestCase
 
             public function process(
                 ServerRequestInterface $request,
-                Delegate $delegate
+                DelegateInterface $delegate
             ) {
                 $this->output->results[] = 'before';
 
@@ -57,7 +57,7 @@ class DispatcherTest extends TestCase
             }
         });
 
-        $dispatcher->addMiddleware(new class($output) implements Middleware {
+        $dispatcher->addMiddleware(new class($output) implements MiddlewareInterface {
             private $output;
 
             public function __construct($output)
@@ -67,7 +67,7 @@ class DispatcherTest extends TestCase
 
             public function process(
                 ServerRequestInterface $request,
-                Delegate $delegate
+                DelegateInterface $delegate
             ) {
                 $this->output->results[] = 'next';
 
@@ -92,7 +92,7 @@ class DispatcherTest extends TestCase
     {
         $dispatcher = new Dispatcher();
 
-        $dispatcher->addMiddleware(new class($this) implements Middleware {
+        $dispatcher->addMiddleware(new class($this) implements MiddlewareInterface {
             /** @var TestCase */
             private $test;
 
@@ -103,7 +103,7 @@ class DispatcherTest extends TestCase
 
             public function process(
                 ServerRequestInterface $request,
-                Delegate $delegate
+                DelegateInterface $delegate
             ) {
                 $response = $delegate->process($request);
 
@@ -113,7 +113,7 @@ class DispatcherTest extends TestCase
             }
         });
 
-        $dispatcher->addMiddleware(new class($this) implements Middleware {
+        $dispatcher->addMiddleware(new class($this) implements MiddlewareInterface {
             private $test;
 
             public function __construct($test)
@@ -123,7 +123,7 @@ class DispatcherTest extends TestCase
 
             public function process(
                 ServerRequestInterface $request,
-                Delegate $delegate
+                DelegateInterface $delegate
             ) {
                 return new StubResponse;
             }
@@ -140,19 +140,19 @@ class DispatcherTest extends TestCase
     {
         $dispatcher = new Dispatcher();
 
-        $dispatcher->addMiddleware(new class implements Middleware {
+        $dispatcher->addMiddleware(new class implements MiddlewareInterface {
             public function process(
                 ServerRequestInterface $request,
-                Delegate $delegate
+                DelegateInterface $delegate
             ) {
                 return new FirstResponse;
             }
         });
 
-        $dispatcher->addMiddleware(new class implements Middleware {
+        $dispatcher->addMiddleware(new class implements MiddlewareInterface {
             public function process(
                 ServerRequestInterface $request,
-                Delegate $delegate
+                DelegateInterface $delegate
             ) {
                 return new SecondResponse;
             }
@@ -169,10 +169,10 @@ class DispatcherTest extends TestCase
     {
         $dispatcher = new Dispatcher();
 
-        $dispatcher->addMiddleware(new class implements Middleware {
+        $dispatcher->addMiddleware(new class implements MiddlewareInterface {
             public function process(
                 ServerRequestInterface $request,
-                Delegate $delegate
+                DelegateInterface $delegate
             ) {
                 $delegate->process($request);
 
@@ -180,10 +180,10 @@ class DispatcherTest extends TestCase
             }
         });
 
-        $dispatcher->addMiddleware(new class implements Middleware {
+        $dispatcher->addMiddleware(new class implements MiddlewareInterface {
             public function process(
                 ServerRequestInterface $request,
-                Delegate $delegate
+                DelegateInterface $delegate
             ) {
                 return new SecondResponse;
             }
@@ -200,19 +200,19 @@ class DispatcherTest extends TestCase
     {
         $dispatcher = new Dispatcher();
 
-        $dispatcher->addMiddleware(new class implements Middleware {
+        $dispatcher->addMiddleware(new class implements MiddlewareInterface {
             public function process(
                 ServerRequestInterface $request,
-                Delegate $delegate
+                DelegateInterface $delegate
             ) {
                 return $delegate->process($request);
             }
         });
 
-        $dispatcher->addMiddleware(new class implements Middleware {
+        $dispatcher->addMiddleware(new class implements MiddlewareInterface {
             public function process(
                 ServerRequestInterface $request,
-                Delegate $delegate
+                DelegateInterface $delegate
             ) {
                 return new FirstResponse;
             }

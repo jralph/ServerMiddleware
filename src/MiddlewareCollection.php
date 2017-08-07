@@ -2,7 +2,7 @@
 
 namespace JRalph\ServerMiddleware;
 
-use JRalph\ServerMiddleware\Psr\Middleware;
+use JRalph\ServerMiddleware\Psr\MiddlewareInterface;
 use Countable;
 use Iterator;
 
@@ -16,7 +16,7 @@ class MiddlewareCollection implements Iterator, Countable
     private $position = 0;
 
     /**
-     * @var Middleware[]
+     * @var MiddlewareInterface[]
      */
     private $middleware = [];
 
@@ -28,9 +28,9 @@ class MiddlewareCollection implements Iterator, Countable
     /**
      * Add a middleware to the collection.
      *
-     * @param Middleware $middleware
+     * @param MiddlewareInterface $middleware
      */
-    public function push(Middleware $middleware)
+    public function push(MiddlewareInterface $middleware)
     {
         $this->middleware[] = $middleware;
     }

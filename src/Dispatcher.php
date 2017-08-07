@@ -3,12 +3,12 @@
 namespace JRalph\ServerMiddleware;
 
 use GuzzleHttp\Psr7\Response;
-use JRalph\ServerMiddleware\Psr\Delegate;
-use JRalph\ServerMiddleware\Psr\Middleware;
+use JRalph\ServerMiddleware\Psr\DelegateInterface;
+use JRalph\ServerMiddleware\Psr\MiddlewareInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class Dispatcher implements Delegate
+class Dispatcher implements DelegateInterface
 {
     /**
      * @var MiddlewareCollection
@@ -30,9 +30,9 @@ class Dispatcher implements Delegate
     }
 
     /**
-     * @param Middleware|Middleware[] ...$middleware
+     * @param MiddlewareInterface|MiddlewareInterface[] ...$middleware
      */
-    public function addMiddleware(Middleware ...$middleware)
+    public function addMiddleware(MiddlewareInterface ...$middleware)
     {
         foreach ($middleware as $item) {
             $this->middleware->push($item);
