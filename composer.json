@@ -1,0 +1,35 @@
+{
+    "name": "joe/psr15-middleware",
+    "description": "A middleware dispatcher supporting psr15.",
+    "type": "library",
+    "license": "MIT",
+    "repositories": [
+        {"type": "composer", "url": "https://repo.packagist.com/pm-connect/"},
+        {"packagist.org": false}
+    ],
+    "authors": [
+        {
+            "name": "Joseph Ralph",
+            "email": "josephralph4@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": "~7.1",
+        "psr/http-message": "^1.0",
+        "guzzlehttp/psr7": "^1.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "JRalph\\ServerMiddleware\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    }
+}
