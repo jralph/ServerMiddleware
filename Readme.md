@@ -3,8 +3,7 @@
 [![Build Status](https://travis-ci.org/jralph/ServerMiddleware.svg)](https://travis-ci.org/jralph/ServerMiddleware)
 [![Coverage Status](https://coveralls.io/repos/github/jralph/ServerMiddleware/badge.svg?branch=master)](https://coveralls.io/github/jralph/ServerMiddleware?branch=master)
 
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/ef0f5a33-a471-49b7-aac1-6b9e6fcb06ed/big.png)](https://insight.sensiolabs.com/projects/ef0f5a33-a471-49b7-aac1-6b9e6fcb06ed)
-
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/c2f0d7b4-7ba8-4e97-b86f-6ca3f0f62dae/big.png)](https://insight.sensiolabs.com/projects/c2f0d7b4-7ba8-4e97-b86f-6ca3f0f62dae)
 A PSR-15 compliant server middleware dispatcher implementation.
 
 ## Goal
