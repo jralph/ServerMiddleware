@@ -40,7 +40,3 @@ $request = new Request;
 
 $response = $dispatcher->handle($request);
 ```
-
-## Note
-
-The interfaces `JRalph\ServerMiddleware\Psr\Delegate` and `JRalph\ServerMiddleware\Psr\Middleware` will be replaced by the official interfaces once the spec has passed draft.
