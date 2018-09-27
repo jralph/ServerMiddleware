@@ -3,12 +3,12 @@
 namespace Tests;
 
 use JRalph\ServerMiddleware\Dispatcher;
-use JRalph\ServerMiddleware\Psr\DelegateInterface;
-use JRalph\ServerMiddleware\Psr\MiddlewareInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
 class DispatcherTest extends TestCase
 {
@@ -19,9 +19,9 @@ class DispatcherTest extends TestCase
         $dispatcher->addMiddleware(new class implements MiddlewareInterface {
             public function process(
                 ServerRequestInterface $request,
-                DelegateInterface $delegate
-            ) {
-                return $delegate->process($request);
+                RequestHandlerInterface $delegate
+            ): ResponseInterface {
+                return $delegate->handle($request);
             }
         });
 
@@ -45,11 +45,11 @@ class DispatcherTest extends TestCase
 
             public function process(
                 ServerRequestInterface $request,
-                DelegateInterface $delegate
-            ) {
+                RequestHandlerInterface $delegate
+            ): ResponseInterface {
                 $this->output->results[] = 'before';
 
-                $response = $delegate->process($request);
+                $response = $delegate->handle($request);
 
                 $this->output->results[] = 'after';
 
@@ -67,17 +67,17 @@ class DispatcherTest extends TestCase
 
             public function process(
                 ServerRequestInterface $request,
-                DelegateInterface $delegate
-            ) {
+                RequestHandlerInterface $delegate
+            ): ResponseInterface {
                 $this->output->results[] = 'next';
 
-                return $delegate->process($request);
+                return $delegate->handle($request);
             }
         });
 
         $requestProphecy = $this->prophesize(ServerRequestInterface::class);
 
-        $response = $dispatcher->process($requestProphecy->reveal());
+        $response = $dispatcher->handle($requestProphecy->reveal());
 
         $this->assertInstanceOf(ResponseInterface::class, $response);
 
@@ -103,9 +103,9 @@ class DispatcherTest extends TestCase
 
             public function process(
                 ServerRequestInterface $request,
-                DelegateInterface $delegate
-            ) {
-                $response = $delegate->process($request);
+                RequestHandlerInterface $delegate
+            ): ResponseInterface {
+                $response = $delegate->handle($request);
 
                 $this->test->assertInstanceOf(StubResponse::class, $response);
 
@@ -123,15 +123,15 @@ class DispatcherTest extends TestCase
 
             public function process(
                 ServerRequestInterface $request,
-                DelegateInterface $delegate
-            ) {
+                RequestHandlerInterface $delegate
+            ): ResponseInterface {
                 return new StubResponse;
             }
         });
 
         $requestProphecy = $this->prophesize(ServerRequestInterface::class);
 
-        $response = $dispatcher->process($requestProphecy->reveal());
+        $response = $dispatcher->handle($requestProphecy->reveal());
 
         $this->assertInstanceOf(ResponseInterface::class, $response);
     }
@@ -143,8 +143,8 @@ class DispatcherTest extends TestCase
         $dispatcher->addMiddleware(new class implements MiddlewareInterface {
             public function process(
                 ServerRequestInterface $request,
-                DelegateInterface $delegate
-            ) {
+                RequestHandlerInterface $delegate
+            ): ResponseInterface {
                 return new FirstResponse;
             }
         });
@@ -152,15 +152,15 @@ class DispatcherTest extends TestCase
         $dispatcher->addMiddleware(new class implements MiddlewareInterface {
             public function process(
                 ServerRequestInterface $request,
-                DelegateInterface $delegate
-            ) {
+                RequestHandlerInterface $delegate
+            ): ResponseInterface {
                 return new SecondResponse;
             }
         });
 
         $requestProphecy = $this->prophesize(ServerRequestInterface::class);
 
-        $response = $dispatcher->process($requestProphecy->reveal());
+        $response = $dispatcher->handle($requestProphecy->reveal());
 
         $this->assertInstanceOf(FirstResponse::class, $response);
     }
@@ -172,9 +172,9 @@ class DispatcherTest extends TestCase
         $dispatcher->addMiddleware(new class implements MiddlewareInterface {
             public function process(
                 ServerRequestInterface $request,
-                DelegateInterface $delegate
-            ) {
-                $delegate->process($request);
+                RequestHandlerInterface $delegate
+            ): ResponseInterface {
+                $delegate->handle($request);
 
                 return new FirstResponse;
             }
@@ -183,15 +183,15 @@ class DispatcherTest extends TestCase
         $dispatcher->addMiddleware(new class implements MiddlewareInterface {
             public function process(
                 ServerRequestInterface $request,
-                DelegateInterface $delegate
-            ) {
+                RequestHandlerInterface $delegate
+            ): ResponseInterface {
                 return new SecondResponse;
             }
         });
 
         $requestProphecy = $this->prophesize(ServerRequestInterface::class);
 
-        $response = $dispatcher->process($requestProphecy->reveal());
+        $response = $dispatcher->handle($requestProphecy->reveal());
 
         $this->assertInstanceOf(FirstResponse::class, $response);
     }
@@ -203,24 +203,24 @@ class DispatcherTest extends TestCase
         $dispatcher->addMiddleware(new class implements MiddlewareInterface {
             public function process(
                 ServerRequestInterface $request,
-                DelegateInterface $delegate
-            ) {
-                return $delegate->process($request);
+                RequestHandlerInterface $delegate
+            ): ResponseInterface {
+                return $delegate->handle($request);
             }
         });
 
         $dispatcher->addMiddleware(new class implements MiddlewareInterface {
             public function process(
                 ServerRequestInterface $request,
-                DelegateInterface $delegate
-            ) {
+                RequestHandlerInterface $delegate
+            ): ResponseInterface {
                 return new FirstResponse;
             }
         });
 
         $requestProphecy = $this->prophesize(ServerRequestInterface::class);
 
-        $response = $dispatcher->process($requestProphecy->reveal());
+        $response = $dispatcher->handle($requestProphecy->reveal());
 
         $this->assertInstanceOf(FirstResponse::class, $response);
     }
@@ -231,7 +231,7 @@ class DispatcherTest extends TestCase
 
         $requestProphecy = $this->prophesize(ServerRequestInterface::class);
 
-        $response = $dispatcher->process($requestProphecy->reveal());
+        $response = $dispatcher->handle($requestProphecy->reveal());
 
         $this->assertInstanceOf(ResponseInterface::class, $response);
 

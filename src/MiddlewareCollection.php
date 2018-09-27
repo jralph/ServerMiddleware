@@ -2,9 +2,9 @@
 
 namespace JRalph\ServerMiddleware;
 
-use JRalph\ServerMiddleware\Psr\MiddlewareInterface;
 use Countable;
 use Iterator;
+use Psr\Http\Server\MiddlewareInterface;
 
 class MiddlewareCollection implements Iterator, Countable
 {

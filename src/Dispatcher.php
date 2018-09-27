@@ -3,12 +3,12 @@
 namespace JRalph\ServerMiddleware;
 
 use GuzzleHttp\Psr7\Response;
-use JRalph\ServerMiddleware\Psr\DelegateInterface;
-use JRalph\ServerMiddleware\Psr\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class Dispatcher implements DelegateInterface
+class Dispatcher implements RequestHandlerInterface
 {
     /**
      * @var MiddlewareCollection
@@ -47,9 +47,8 @@ class Dispatcher implements DelegateInterface
      *
      * @param ServerRequestInterface $request
      * @return ResponseInterface
-     * @throws \Exception
      */
-    public function process(ServerRequestInterface $request)
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $this->middleware->next();
 

@@ -26,8 +26,7 @@ $dispatcher = (new Dispatcher())
     ->addMiddleware(
         
           /**
-           * Implementations of JRalph\ServerMiddleware\Psr\Middleware
-           * To be chanegd once PSR-15 is out of draft.
+           * Implementations of Psr\Http\Server\MiddlewareInterface
            */
           
           $firstMiddleware,
@@ -39,7 +38,7 @@ $dispatcher = (new Dispatcher())
 /** @var \Psr\Http\Message\ServerRequestInterface $request */
 $request = new Request;
 
-$response = $dispatcher->process($request);
+$response = $dispatcher->handle($request);
 ```
 
 ## Note

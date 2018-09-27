@@ -3,11 +3,11 @@
 namespace Tests;
 
 use JRalph\ServerMiddleware\MiddlewareCollection;
-use JRalph\ServerMiddleware\Psr\DelegateInterface;
-use JRalph\ServerMiddleware\Psr\MiddlewareInterface;
+use Psr\Http\Server\MiddlewareInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
 class MiddlewareCollectionTest extends TestCase
 {
@@ -25,8 +25,8 @@ class MiddlewareCollectionTest extends TestCase
 
             public function process(
                 ServerRequestInterface $request,
-                DelegateInterface $delegate
-            ) {
+                RequestHandlerInterface $delegate
+            ): ResponseInterface {
                 return $this->response;
             }
         };
