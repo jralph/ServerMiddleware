@@ -120,4 +120,14 @@ class MiddlewareCollection implements Iterator, Countable
     {
         return count($this->toArray());
     }
+
+    /**
+     * Set the iterator to the given position.
+     *
+     * @param int $position The position to set to.
+     */
+    public function set(int $position)
+    {
+        $this->position = $position;
+    }
 }

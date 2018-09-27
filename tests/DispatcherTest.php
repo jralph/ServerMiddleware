@@ -4,6 +4,7 @@ namespace Tests;
 
 use JRalph\ServerMiddleware\Dispatcher;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
@@ -236,6 +237,70 @@ class DispatcherTest extends TestCase
         $this->assertInstanceOf(ResponseInterface::class, $response);
 
         $this->assertEquals(500, $response->getStatusCode());
+    }
+
+    function testItCanProcessMiddlewareMultipleTimes()
+    {
+        $dispatcher = new Dispatcher();
+
+        $output = (object) ['results' => []];
+
+        $dispatcher->addMiddleware(new class($output) implements MiddlewareInterface {
+            private $output;
+
+            public function __construct($output)
+            {
+                $this->output = $output;
+            }
+
+            public function process(
+                ServerRequestInterface $request,
+                RequestHandlerInterface $delegate
+            ): ResponseInterface {
+                $this->output->results[] = 'before';
+
+                $response = $delegate->handle($request);
+
+                $this->output->results[] = 'after';
+
+                return $response;
+            }
+        });
+
+        $dispatcher->addMiddleware(new class($output) implements MiddlewareInterface {
+            private $output;
+
+            public function __construct($output)
+            {
+                $this->output = $output;
+            }
+
+            public function process(
+                ServerRequestInterface $request,
+                RequestHandlerInterface $delegate
+            ): ResponseInterface {
+                $this->output->results[] = 'next';
+
+                return $delegate->handle($request);
+            }
+        });
+
+        $requestProphecy = $this->prophesize(ServerRequestInterface::class);
+
+        $response = $dispatcher->handle($requestProphecy->reveal());
+        $response2 = $dispatcher->handle($requestProphecy->reveal());
+
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertInstanceOf(ResponseInterface::class, $response2);
+
+        $this->assertEquals([
+            'before',
+            'next',
+            'after',
+            'before',
+            'next',
+            'after'
+        ], $output->results);
     }
 }
 

@@ -56,6 +56,8 @@ class Dispatcher implements RequestHandlerInterface
             $response = $this->middleware->current()->process($request, $this);
         }
 
+        $this->middleware->set(-1);
+
         return $response ?? $this->getDefaultResponse();
     }
 
