@@ -1,16 +1,15 @@
 language: php
-
 php:
-  - 7.1
-
+- 7.1
 install:
-  - composer self-update
-  - composer install --prefer-source --no-interaction --dev
-
+- composer self-update
+- composer install --prefer-source --no-interaction --dev
 script:
-  - mkdir -p build/logs
-  - phpunit --coverage-clover build/logs/clover.xml
-  - phpdbg -qrr ./vendor/bin/infection --min-msi=100
-
+- mkdir -p build/logs
+- phpunit --coverage-clover build/logs/clover.xml
+- phpdbg -qrr ./vendor/bin/infection --min-msi=100
 after_success:
-  - travis_retry php vendor/bin/php-coveralls -v
+- travis_retry php vendor/bin/php-coveralls -v
+env:
+  global:
+    secure: PeJrp2HeTFcIiNww/9+YxsluVVlDpiFJ5ykRUE2G4nr1P0Q9k/yPiTq01ys8dMA78514+vK5N/JVR2ObP8NME9uth70QPwnXKN5Rdh3wUn2Uk8j+rmzAB5Z38+0JM4Nt9Iuwz6i3H0V1J3u7Q1B5VorZ0J95fsQJSqq7VyMT3HxlebEkxHyHsGEWuFaH3HvcYAH8QA+c7U3yTqM+21lfrPEIpjj2tiwRSc32Zr5eeV+CsRarY/pQ/JA03K4/LQqc/pp40wOL7GJT6wLft9gv9s9R4G3aAgDToj2/TI9mmPyXiqjPojW8BnWjgWAUXV3flRXvSNw8sk/oMuT0DLHSX+DAnp4lJ8eCJLafZBcZmasb7hrSNtrDRnq1kRJOWFXhz/u1Rlo+yzPRzI5XtZ04wDyHIMYxVbpxbfRGiHL5xAJgR/x09hY64Pudoq7ufwMNZICEGhTQ1na45RHeXfZLRblCq1o/juOKN+jV1+Ajx6pC1SD+NrF9bfPsQkWQ/8ssxbr0Xl9Wuh14ONBycrndeLftDS7l9Mi0Wn5g232o3wNCHbJAPcA2kJTHfJRkVCLhM4lNIyW/aEsZTtX1UMNMf2x3DgKAHMsE7cPN0nThe7Urn69OeVWigDKxncvX3jA1F5iaocBSJv6MfTyKockKP0A56qqtxhz4QJSZgoFIlWw=
