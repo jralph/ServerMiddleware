@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/jralph/ServerMiddleware.svg)](https://travis-ci.org/jralph/ServerMiddleware)
 [![Coverage Status](https://coveralls.io/repos/github/jralph/ServerMiddleware/badge.svg?branch=master)](https://coveralls.io/github/jralph/ServerMiddleware?branch=master)
+[![Mutation testing badge](https://badge.stryker-mutator.io/github.com/jralph/ServerMiddleware/master)](https://stryker-mutator.github.io)
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/c2f0d7b4-7ba8-4e97-b86f-6ca3f0f62dae/big.png)](https://insight.sensiolabs.com/projects/c2f0d7b4-7ba8-4e97-b86f-6ca3f0f62dae)
 
