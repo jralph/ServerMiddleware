@@ -48,8 +48,6 @@ class MiddlewareCollectionTest extends TestCase
         $collection->push($this->getDummyMiddleware());
 
         $this->assertEquals(2, count($collection->toArray()));
-
-        $this->assertEquals(0, $collection->key());
     }
 
     public function testItIsCountable()
@@ -59,5 +57,21 @@ class MiddlewareCollectionTest extends TestCase
         $collection->push($this->getDummyMiddleware());
 
         $this->assertEquals(1, count($collection));
+    }
+
+    public function testItRewinds()
+    {
+        $collection = new MiddlewareCollection();
+
+        $collection->push($this->getDummyMiddleware());
+        $collection->push($this->getDummyMiddleware());
+
+        $collection->next();
+
+        $this->assertEquals(1, $collection->key());
+
+        $collection->rewind();
+
+        $this->assertEquals(0, $collection->key());
     }
 }

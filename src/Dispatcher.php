@@ -33,7 +33,7 @@ class Dispatcher implements RequestHandlerInterface
      * @param MiddlewareInterface|MiddlewareInterface[] ...$middleware
      * @return $this
      */
-    public function addMiddleware(MiddlewareInterface ...$middleware)
+    public function addMiddleware(MiddlewareInterface ...$middleware): self
     {
         foreach ($middleware as $item) {
             $this->middleware->push($item);
