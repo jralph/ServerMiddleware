@@ -1,20 +1,15 @@
 language: php
-
 php:
 - 7.1
-
 install:
 - composer self-update
 - composer install --prefer-source --no-interaction --dev
-
 script:
 - mkdir -p build/logs
 - phpunit --coverage-clover build/logs/clover.xml
 - phpdbg -qrr ./vendor/bin/infection --min-msi=100
-
 after_success:
 - travis_retry php vendor/bin/php-coveralls -v
-
 env:
   global:
-    secure: nMcLRjjYVbqflxt9n8k4wKdLj3OSIua7XoVImGKIhwFr20+0Jq72PI34ojrtoywOicvHnKFgxkoX6GRjnfXAhFBuJFT6vAJMIS6g8I2+RdFO6D9s5L/6y0E0Ucku24zLmZqWLvtc1LZKkp8+ub01TMc3GgrbWI1K0QzwyBVChcONxbJXyMd2UVKzUuq9i5Vip4FKGOilWQ5q3gCNMRh9jnfA7U5S2aN9Datt7z76EqOLN+8g4izGg+Q8yiOYsxIY7G334A1NhGk/GpTj9O08EcvaYTzOfMvnEiybNzJgaAnwdq4bkEqVOjQkx5ZanzAbnFQ5bMQC00IlGAEFSZXOPpb8QMMEyldnYY/mmbMB5xPtHP+uBKTmHDpxdxxJ76D6iRKqnoVRx8srlh7+1Y406zgjDHJlS8ZSXhJ+bcbNmBmiFr9uR4Rst7rB6ey4FnVZuwetPSrrRj6nwqDYEsV+crd4PN1/zKLslsK1J6v3nq7pNxMENIj5D/v/RjUWYmOM6ffum8yv9O+iQFBwrLuUl6ngR5mipep3/Nr9b/AZ/iKvQxTjOecEH/7DQb9Y+YENP7Jz8hMZIUf6luDHN6o7gOriqUXKlba57LlpWGjuJrA69oUpWuMIBYgLEMDQ/hJeQsAQwyqtSUeC4HP8ou8sOB8fej3YpuzNKccwmb8+Brw=
+    secure: PyAhW35ocbggkiwzCtnYdeA4Io+XbZzBUI7iQONx1twK7UKjjdgYjbA+5QiPiPyvxL+y9kqtMWjcFm0e4qoRzWogY/fGLoVaPf9qphaCLVXDn8CPsOwxODMtEJSkq1mIngbg+nl5sfZPpvOsiNo/K9Qk9zs6VFUzJej+fNORR6s/l3SRmrYPKX8MLVYBB9Aj5173V2kohUjRaVnblpjvjcTtUqmJnv6PjoTXCmOMiA8rrZ+D8kjWl1IkqUMa9YY6hTQRfHG5DkurW5WtmvIxokoKiH2NN52j9DGuMaW6M6dcJRLYMAcUlYDXWGL6Hmp32m1nmLiTy98l+rku/TTm+vUDXWCf91jepib0Ag/k+ysqU9qsKG1nFoKLBsXQJOOOfRih4lQANFDYGnCGxrUnut4fIGeCjr48/XCkXYahAdm9uGkHju8xTr9GGO/2X1jNlQ3QMWqJntkXqomgf9tRnMhO2eWz4EuFgC21zVkOuZfM8iEbwG/5j2mO/V9wQCRjhyqnOoxw5jjF1VfGcLY+OmXRGAoLsmTa1kMYwhIlZ7jSZDmDCMnTDlo0oca9JLBoapD9g3WmBU+ua+1flm+HeffIh9XPGtcL61Nw0AceTpInUwFlNxdUK2TwYNgZ+mBFIMyxBAr/QrMprT2QON9rcwr2tjTPCOyXVYCZdjMijmo=
